@@ -1,0 +1,11 @@
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\bin\Debug\netcoreapp2.0\TestApiBakery.deps.json
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\bin\Debug\netcoreapp2.0\TestApiBakery.runtimeconfig.json
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\bin\Debug\netcoreapp2.0\TestApiBakery.runtimeconfig.dev.json
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\bin\Debug\netcoreapp2.0\TestApiBakery.dll
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\obj\Debug\netcoreapp2.0\TestApiBakery.csproj.CoreCompileInputs.cache
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\obj\Debug\netcoreapp2.0\TestApiBakery.AssemblyInfoInputs.cache
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\obj\Debug\netcoreapp2.0\TestApiBakery.AssemblyInfo.cs
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\bin\Debug\netcoreapp2.0\TestApiBakery.pdb
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\obj\Debug\netcoreapp2.0\TestApiBakery.dll
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\obj\Debug\netcoreapp2.0\TestApiBakery.pdb
+C:\Users\A\source\repos\TestApiBakery\TestApiBakery\obj\Debug\netcoreapp2.0\TestApiBakery.csprojAssemblyReference.cache

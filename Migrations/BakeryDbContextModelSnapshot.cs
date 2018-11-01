@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using System;
 using TestApiBakery.Data;
 
@@ -232,13 +230,9 @@ namespace TestApiBakery.Migrations
 
                     b.Property<string>("AppUserId");
 
-                    b.Property<int>("BakeryDetailsId");
-
                     b.HasKey("OrderId");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("BakeryDetailsId");
 
                     b.ToTable("Orders");
                 });
@@ -337,11 +331,6 @@ namespace TestApiBakery.Migrations
                     b.HasOne("TestApiBakery.Data.AppUser", "AppUser")
                         .WithMany("Orders")
                         .HasForeignKey("AppUserId");
-
-                    b.HasOne("TestApiBakery.Data.BakeryDetails", "BakeryDetails")
-                        .WithMany()
-                        .HasForeignKey("BakeryDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TestApiBakery.Data.OrderItem", b =>

@@ -11,7 +11,7 @@ using TestApiBakery.Data;
 namespace TestApiBakery.Migrations
 {
     [DbContext(typeof(BakeryDbContext))]
-    [Migration("20181101151924_init")]
+    [Migration("20181101205256_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -233,13 +233,9 @@ namespace TestApiBakery.Migrations
 
                     b.Property<string>("AppUserId");
 
-                    b.Property<int>("BakeryDetailsId");
-
                     b.HasKey("OrderId");
 
                     b.HasIndex("AppUserId");
-
-                    b.HasIndex("BakeryDetailsId");
 
                     b.ToTable("Orders");
                 });
@@ -338,11 +334,6 @@ namespace TestApiBakery.Migrations
                     b.HasOne("TestApiBakery.Data.AppUser", "AppUser")
                         .WithMany("Orders")
                         .HasForeignKey("AppUserId");
-
-                    b.HasOne("TestApiBakery.Data.BakeryDetails", "BakeryDetails")
-                        .WithMany()
-                        .HasForeignKey("BakeryDetailsId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TestApiBakery.Data.OrderItem", b =>

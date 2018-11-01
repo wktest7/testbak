@@ -70,8 +70,7 @@ namespace TestApiBakery.Data
                 {
                     orders.Add(new Order
                     {
-                        AppUserId = appUsers[rnd.Next(appUsers.Count)].Id,
-                        BakeryDetailsId = 1
+                        AppUserId = appUsers[rnd.Next(appUsers.Count)].Id
                     });
                 }
                 context.Orders.AddRange(orders);

@@ -197,8 +197,7 @@ namespace TestApiBakery.Migrations
                 {
                     OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AppUserId = table.Column<string>(nullable: true),
-                    BakeryDetailsId = table.Column<int>(nullable: false)
+                    AppUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -209,12 +208,6 @@ namespace TestApiBakery.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Orders_BakeryDetails_BakeryDetailsId",
-                        column: x => x.BakeryDetailsId,
-                        principalTable: "BakeryDetails",
-                        principalColumn: "BakeryDetailsId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -313,11 +306,6 @@ namespace TestApiBakery.Migrations
                 column: "AppUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_BakeryDetailsId",
-                table: "Orders",
-                column: "BakeryDetailsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_OrdersItems_OrderId",
                 table: "OrdersItems",
                 column: "OrderId");
@@ -351,6 +339,9 @@ namespace TestApiBakery.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "BakeryDetails");
+
+            migrationBuilder.DropTable(
                 name: "OrdersItems");
 
             migrationBuilder.DropTable(
@@ -364,9 +355,6 @@ namespace TestApiBakery.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "BakeryDetails");
 
             migrationBuilder.DropTable(
                 name: "Categories");

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using TestApiBakery.Data;
 using TestApiBakery.Data.Repositories;
 using TestApiBakery.Models;
+using TestApiBakery.Services;
 
 namespace TestApiBakery.Controllers
 {
@@ -16,10 +17,12 @@ namespace TestApiBakery.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IOrderService _orderService;
 
-        public OrdersController(IOrderRepository orderRepository)
+        public OrdersController(IOrderRepository orderRepository, IOrderService orderService)
         {
             _orderRepository = orderRepository;
+            _orderService = orderService;
         }
 
         // GET: api/Orders
@@ -54,12 +57,30 @@ namespace TestApiBakery.Controllers
             
         }
 
-        // POST: api/Orders
         [HttpPost]
-        public void Post([FromBody]string value)
+        public async Task<IActionResult> Post([FromBody] OrderCreateDto orderCreateDto)
         {
+            if (orderCreateDto == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //if (!await _orderRepository.CategoryExistsAsync(orderDto.CategoryId))
+            //{
+            //    return NotFound();
+            //}
+            await _orderService.AddAsync(orderCreateDto);
+
+            //var order = Mapper.Map<OrderCreateDto, Order>(orderCreateDto);
+            // await _orderRepository.AddAsync(order);
+            return StatusCode(201);
         }
-        
+
         // PUT: api/Orders/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody]string value)

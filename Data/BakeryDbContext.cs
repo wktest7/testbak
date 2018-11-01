@@ -42,6 +42,11 @@ namespace TestApiBakery.Data
                .WithMany()
                .HasForeignKey(a => a.ProductId);
 
+            modelBuilder.Entity<Order>()
+              .HasOne(a => a.AppUser)
+              .WithMany(b => b.Orders)
+              .HasForeignKey(a => a.AppUserId);
+
 
         }
 

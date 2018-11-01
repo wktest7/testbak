@@ -19,6 +19,8 @@ namespace TestApiBakery.Services
 
         public async Task AddAsync(Order order)
         {
+
+
             await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
         }
@@ -26,8 +28,6 @@ namespace TestApiBakery.Services
         public async Task<Order> GetByIdAsync(int id)
         {
             return await _context.Orders
-                .Include(x => x.AppUser)
-                .Include(x => x.BakeryDetails)
                 .Include(x => x.OrderItems)
                 .ThenInclude(a => a.Product)
                 .FirstOrDefaultAsync(x => x.OrderId == id);
@@ -36,8 +36,6 @@ namespace TestApiBakery.Services
         public async Task<IEnumerable<Order>> GetByNipAsync(string nip)
         {
             return await _context.Orders
-                .Include(x => x.AppUser)
-                .Include(x => x.BakeryDetails)
                 .Include(x => x.OrderItems)
                 .ThenInclude(a => a.Product)
                 .Where(x => x.AppUser.Nip == nip)

@@ -44,6 +44,7 @@ namespace TestApiBakery
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
 
 
 
@@ -77,28 +78,22 @@ namespace TestApiBakery
                 .ForMember(dest => dest.ProductPrice, opts => opts.MapFrom(src => src.Product.Price))
                 .ForMember(dest => dest.Price, opts => opts.MapFrom(src => src.Product.Price * src.Quantity));
 
-
                 cfg.CreateMap<Order, OrderDto>()
-                .ForMember(dest => dest.CompanyName, opts => opts.MapFrom(src => src.BakeryDetails.Name))
-                .ForMember(dest => dest.CompanyAddress, opts => opts.MapFrom(src => src.BakeryDetails.Address))
-                .ForMember(dest => dest.CompanyPostalCode, opts => opts.MapFrom(src => src.BakeryDetails.PostalCode))
-                .ForMember(dest => dest.CompanyNip, opts => opts.MapFrom(src => src.BakeryDetails.Nip))
-                .ForMember(dest => dest.CompanyPhone, opts => opts.MapFrom(src => src.BakeryDetails.Phone))
-                .ForMember(dest => dest.CustomerName, opts => opts.MapFrom(src => src.AppUser.CompanyName))
-                .ForMember(dest => dest.CustomerAddress, opts => opts.MapFrom(src => src.AppUser.Address))
-                .ForMember(dest => dest.CustomerPostalCode, opts => opts.MapFrom(src => src.AppUser.PostalCode))
-                .ForMember(dest => dest.CustomerNip, opts => opts.MapFrom(src => src.AppUser.Nip))
-                .ForMember(dest => dest.CustomerPhone, opts => opts.MapFrom(src => src.AppUser.PhoneNumber))
-                .ForMember(dest => dest.OrderItems, opts => opts.MapFrom(src => src.OrderItems))
-                .AfterMap((src, dest) => dest.FinalPrice = src.OrderItems.Sum(x => x.Product.Price * x.Quantity));
+                //.ForMember(dest => dest.CompanyName, opts => opts.MapFrom(src => src.BakeryDetails.Name))
+                //.ForMember(dest => dest.CompanyAddress, opts => opts.MapFrom(src => src.BakeryDetails.Address))
+                //.ForMember(dest => dest.CompanyPostalCode, opts => opts.MapFrom(src => src.BakeryDetails.PostalCode))
+                //.ForMember(dest => dest.CompanyNip, opts => opts.MapFrom(src => src.BakeryDetails.Nip))
+                //.ForMember(dest => dest.CompanyPhone, opts => opts.MapFrom(src => src.BakeryDetails.Phone))
+                //.ForMember(dest => dest.CustomerName, opts => opts.MapFrom(src => src.AppUser.CompanyName))
+                //.ForMember(dest => dest.CustomerAddress, opts => opts.MapFrom(src => src.AppUser.Address))
+                //.ForMember(dest => dest.CustomerPostalCode, opts => opts.MapFrom(src => src.AppUser.PostalCode))
+                //.ForMember(dest => dest.CustomerNip, opts => opts.MapFrom(src => src.AppUser.Nip))
+                //.ForMember(dest => dest.CustomerPhone, opts => opts.MapFrom(src => src.AppUser.PhoneNumber))
+                //.ForMember(dest => dest.OrderItems, opts => opts.MapFrom(src => src.OrderItems))
+                .ForMember(dest => dest.FinalPrice, opts => opts.MapFrom(src => src.OrderItems.Sum(x => x.Product.Price * x.Quantity)));
+                //.AfterMap((src, dest) => dest.FinalPrice = src.OrderItems.Sum(x => x.Product.Price * x.Quantity));
 
-               
-                
-
-
-
-
-
+ 
             });
 
             app.UseMvc();

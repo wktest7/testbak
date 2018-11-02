@@ -216,7 +216,7 @@ namespace TestApiBakery.Migrations
                 {
                     ProductId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CategoryId = table.Column<int>(nullable: false),
+                    CategoryId = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     ImagePath = table.Column<string>(nullable: true),
                     Name = table.Column<string>(nullable: true),
@@ -231,7 +231,7 @@ namespace TestApiBakery.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "CategoryId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(

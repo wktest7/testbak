@@ -9,5 +9,7 @@ namespace TestApiBakery.Services
     public interface IOrderService
     {
         Task AddAsync(OrderCreateDto orderCreateDto);
+        Task<IEnumerable<OrderDto>> GetByNipAsync(string nip);
+        Task<OrderDto> GetByIdAsync(int id);
     }
 }

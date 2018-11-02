@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +14,15 @@ namespace TestApiBakery.Services
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
+        private readonly IMapper _mapper;
         //private readonly IHttpContextAccessor _httpContextAccessor;
 
         public OrderService(IOrderRepository orderRepository, IProductRepository productRepository
-            /*IHttpContextAccessor httpContextAccessor*/)
+            /*IHttpContextAccessor httpContextAccessor*/, IMapper mapper)
         {
             _orderRepository = orderRepository;
             _productRepository = productRepository;
+            _mapper = mapper;
             //_httpContextAccessor = httpContextAccessor;
             //i potem user manager get by name
         }
@@ -46,17 +49,23 @@ namespace TestApiBakery.Services
                 });
             }
 
-            try
-            {
-                await _orderRepository.AddAsync(order);
 
-            }
-            catch (Exception ex)
-            {
+            await _orderRepository.AddAsync(order);
 
-                throw;
-            }
 
         }
+
+        public async Task<OrderDto> GetByIdAsync(int id)
+        {
+            var order = await _orderRepository.GetByIdAsync(id);
+            return _mapper.Map<Order, OrderDto>(order);
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetByNipAsync(string nip)
+        {
+            var orders = await _orderRepository.GetByNipAsync(nip);
+            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
+        }
+
     }
 }

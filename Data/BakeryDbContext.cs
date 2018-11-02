@@ -27,10 +27,14 @@ namespace TestApiBakery.Data
         {
             base.OnModelCreating(modelBuilder);
 
+
+
             modelBuilder.Entity<Product>()
                 .HasOne(a => a.Category)
                 .WithMany(b => b.Products)
-                .HasForeignKey(a => a.CategoryId);
+                .HasForeignKey(a => a.CategoryId)
+                .OnDelete(DeleteBehavior.SetNull);
+                
 
             modelBuilder.Entity<OrderItem>()
                 .HasOne(a => a.Order)

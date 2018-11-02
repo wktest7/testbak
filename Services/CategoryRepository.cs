@@ -17,14 +17,42 @@ namespace TestApiBakery.Services
             _context = context;
         }
 
-        //public async Task<bool> CategoryExists(string category)
-        //{
-        //    return await _context.Categories.AnyAsync(x => x.Name == category);
-        //}
-
-        public async Task<IEnumerable<string>> GetAllNamesAnync()
+        public async Task AddAsync(Category category)
         {
-            return await _context.Categories.Select(x => x.Name).ToListAsync();
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> CategoryExistsAsync(int id)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == id);
+            if (category != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<IEnumerable<Category>> GetAllAsync()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
+        public async Task<Category> GetByIdAsync(int id)
+        {
+           return await _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == id);
+        }
+
+        public async Task RemoveAsync(Category category)
+        {
+            _context.Categories.Remove(category);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Category category)
+        {
+            _context.Categories.Update(category);
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestApiBakery.Data;
-using TestApiBakery.Data.Repositories;
 using TestApiBakery.Models;
+using TestApiBakery.Services;
 
 namespace TestApiBakery.Controllers
 {
@@ -15,43 +14,35 @@ namespace TestApiBakery.Controllers
     [Route("api/Products")]
     public class ProductsController : Controller
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductService _productService;
         
-        public ProductsController(IProductRepository productRepository)
+        public ProductsController(IProductService productService)
         {
-            _productRepository = productRepository;
+            _productService = productService;
         }
-        //GET: api/Products
+        
         [HttpGet]
         public IActionResult Get()
         {
             return Ok("ss");
         }
 
-        // GET: api/Products/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(Mapper.Map<Product, ProductDto>(product));
+            var product = await _productService.GetByIdAsync(id);
+            return Ok(product);
         }
 
         [HttpGet("category/{category}")]
         public async Task<IActionResult> Get(string category)
         {
-            var products = await _productRepository.GetByCategory(category);
-            if (products.Count() == 0)
-            {
-                return NotFound();
-            }
-            return Ok(Mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products));
+            var products = await _productService.GetByCategoryAsync(category);
+            return Ok(products);
         }
 
-        // POST: api/Products
+        
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ProductDto productDto)
         {
@@ -65,17 +56,11 @@ namespace TestApiBakery.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (!await _productRepository.CategoryExistsAsync(productDto.CategoryId))
-            {
-                return NotFound();
-            }
-
-            var product = Mapper.Map<ProductDto, Product>(productDto);
-            await _productRepository.AddAsync(product);
+            await _productService.AddAsync(productDto);
             return StatusCode(201);
         }
 
-        // PUT: api/Products/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] ProductDto productDto)
         {
@@ -88,40 +73,17 @@ namespace TestApiBakery.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var x = await _productRepository.GetByIdAsync(id);
-           
-
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            if (!await _productRepository.CategoryExistsAsync(productDto.CategoryId))
-            {
-                return BadRequest();
-            }
-
-            product = Mapper.Map<ProductDto, Product>(productDto, product);
-            product.ProductId = id;
             
-            
-            await _productRepository.UpdateAsync(product);
+            await _productService.UpdateAsync(id, productDto);
 
             return NoContent();
         }
 
-        // DELETE: api/ApiWithActions/5
+       
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            await _productRepository.RemoveAsync(product);
+            await _productService.RemoveAsync(id);
             
             return NoContent();
         }

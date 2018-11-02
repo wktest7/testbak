@@ -7,7 +7,11 @@ namespace TestApiBakery.Data.Repositories
 {
     public interface ICategoryRepository
     {
-        //Task<bool> CategoryExists(string category);
-        Task<IEnumerable<string>> GetAllNamesAnync();
+        Task<Category> GetByIdAsync(int id);
+        Task<IEnumerable<Category>> GetAllAsync();
+        Task AddAsync(Category category);
+        Task UpdateAsync(Category category);
+        Task RemoveAsync(Category category);
+        Task<bool> CategoryExistsAsync(int id);
     }
 }

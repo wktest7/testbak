@@ -18,20 +18,12 @@ namespace TestApiBakery.Services
             _context = context;
         }
 
-        public async Task<IEnumerable<Product>> GetByCategory(string category)
+        public async Task<IEnumerable<Product>> GetByCategoryAsync(string category)
         {
             return await _context.Products
                 .Include(x => x.Category)
                 .Where(x => x.Category.Name.Equals(category))
                 .ToListAsync();
-        }
-
-        public async Task<Product> GetByIdAsync(int id)
-        {
-            return await _context.Products
-                .Include(x => x.Category)
-                .Where(x => x.ProductId == id)
-                .FirstOrDefaultAsync();
         }
 
         public async Task AddAsync(Product product)
@@ -42,24 +34,29 @@ namespace TestApiBakery.Services
 
         public async Task UpdateAsync(Product product)
         {
-            _context.Update(product);
+            _context.Products.Update(product);
             await _context.SaveChangesAsync();
         }
 
         public async Task RemoveAsync(Product product)
         {
-            _context.Remove(product);
+            _context.Products.Remove(product);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> CategoryExistsAsync(int id)
+        public async Task<Product> GetByIdAsync(int id, bool includeCategory = true)
         {
-            var category = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == id);
-            if (category != null)
+            if (includeCategory)
             {
-                return true;
+                return await _context.Products
+                .Include(x => x.Category)
+                .Where(x => x.ProductId == id)
+                .FirstOrDefaultAsync();
             }
-            return false;
+
+            return await _context.Products
+                .Where(x => x.ProductId == id)
+                .FirstOrDefaultAsync();
         }
     }
 }

@@ -36,24 +36,23 @@ namespace TestApiBakery.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
+            var order = await _orderService.GetByIdAsync(id);
             if (order == null)
             {
                 return NotFound();
             }
-            return Ok(Mapper.Map<Order, OrderDto>(order));
-            //return Ok(order);
+            return Ok(order);
         }
 
         [HttpGet("nip/{nip}")]
         public async Task<IActionResult> GetByNip(string nip)
         {
-            var orders = await _orderRepository.GetByNipAsync(nip);
+            var orders = await _orderService.GetByNipAsync(nip);
             if (orders.Count() == 0)
             {
                 return NotFound();
             }
-            return Ok(Mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders));
+            return Ok(orders);
             
         }
 

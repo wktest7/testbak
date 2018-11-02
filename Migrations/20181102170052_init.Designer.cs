@@ -11,7 +11,7 @@ using TestApiBakery.Data;
 namespace TestApiBakery.Migrations
 {
     [DbContext(typeof(BakeryDbContext))]
-    [Migration("20181101205256_init")]
+    [Migration("20181102170052_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -265,7 +265,7 @@ namespace TestApiBakery.Migrations
                     b.Property<int>("ProductId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CategoryId");
+                    b.Property<int?>("CategoryId");
 
                     b.Property<string>("Description");
 
@@ -354,7 +354,7 @@ namespace TestApiBakery.Migrations
                     b.HasOne("TestApiBakery.Data.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.SetNull);
                 });
 #pragma warning restore 612, 618
         }

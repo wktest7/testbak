@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using TestApiBakery.Data.Repositories;
+using TestApiBakery.Models;
+using TestApiBakery.Services;
 
 namespace TestApiBakery.Controllers
 {
@@ -12,42 +13,61 @@ namespace TestApiBakery.Controllers
     [Route("api/Categories")]
     public class CategoriesController : Controller
     {
-        private readonly ICategoryRepository _categoryRepository;
+        private readonly ICategoryService _categoryService;
 
-        public CategoriesController(ICategoryRepository categoryRepository)
+        public CategoriesController(ICategoryService categoryService)
         {
-            _categoryRepository = categoryRepository;
+            _categoryService = categoryService;
         }
-        // GET: api/Categories
+        
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _categoryRepository.GetAllNamesAnync());
+            return Ok(await _categoryService.GetNamesAsync());
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> Post([FromBody] CategoryDto categoryDto)
+        {
+            if (categoryDto == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _categoryService.AddAsync(categoryDto);
+            return StatusCode(201);
+        }
+        
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Put(int id, [FromBody] CategoryDto categoryDto)
+        {
+            if (categoryDto == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _categoryService.UpdateAsync(id, categoryDto);
+
+            return NoContent();
         }
 
-        // GET: api/Categories/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-        
-        // POST: api/Categories
-        [HttpPost]
-        public void Post([FromBody]string value)
-        {
-        }
-        
-        // PUT: api/Categories/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-        
-        // DELETE: api/ApiWithActions/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            await _categoryService.RemoveAsync(id);
+
+            return NoContent();
         }
     }
 }

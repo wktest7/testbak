@@ -10,9 +10,9 @@ namespace TestApiBakery.Services
     {
         Task<ProductDto> GetByIdAsync(int id);
         Task<IEnumerable<ProductDto>> GetByCategoryAsync(string category);
-        Task AddAsync(ProductDto productDto);
-        Task UpdateAsync(int id, ProductDto productDto);
-        Task RemoveAsync(int id);
+        Task AddAsync(ProductEditDto productDto);
+        Task UpdateAsync(int id, ProductEditDto productDto);
+        //Task RemoveAsync(int id);
 
     }
 }

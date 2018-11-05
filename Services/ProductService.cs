@@ -23,14 +23,14 @@ namespace TestApiBakery.Services
             _mapper = mapper;
         }
 
-        public async Task AddAsync(ProductDto productDto)
+        public async Task AddAsync(ProductEditDto productEditDto)
         {
-            if (!await _categoryRepository.CategoryExistsAsync(productDto.CategoryId))
+            if (!await _categoryRepository.CategoryExistsAsync(productEditDto.CategoryId))
             {
-                throw new Exception($"Category with id: '{productDto.CategoryId}' not exists.");
+                throw new Exception($"Category with id: '{productEditDto.CategoryId}' not exists.");
             }
 
-            var product = _mapper.Map<ProductDto, Product>(productDto);
+            var product = _mapper.Map<ProductEditDto, Product>(productEditDto);
             await _productRepository.AddAsync(product);
         }
 
@@ -54,18 +54,18 @@ namespace TestApiBakery.Services
             return _mapper.Map<Product, ProductDto>(product);
         }
 
-        public async Task RemoveAsync(int id)
-        {
-            var product = await _productRepository.GetByIdAsync(id);
-            if (product == null)
-            {
-                throw new Exception($"Product with id: '{id}' not exists.");
-            }
+        //public async Task RemoveAsync(int id)
+        //{
+        //    var product = await _productRepository.GetByIdAsync(id);
+        //    if (product == null)
+        //    {
+        //        throw new Exception($"Product with id: '{id}' not exists.");
+        //    }
 
-            await _productRepository.RemoveAsync(product);
-        }
+        //    await _productRepository.RemoveAsync(product);
+        //}
 
-        public async Task UpdateAsync(int id, ProductDto productDto)
+        public async Task UpdateAsync(int id, ProductEditDto productEditDto)
         {
             var product = await _productRepository.GetByIdAsync(id, false);
             if (product == null)
@@ -73,12 +73,12 @@ namespace TestApiBakery.Services
                 throw new Exception($"Product with id: '{id}' not exists.");
             }
 
-            if (!await _categoryRepository.CategoryExistsAsync(productDto.CategoryId))
+            if (!await _categoryRepository.CategoryExistsAsync(productEditDto.CategoryId))
             {
-                throw new Exception($"Category with id: '{productDto.CategoryId}' not exists.");
+                throw new Exception($"Category with id: '{productEditDto.CategoryId}' not exists.");
             }
 
-            product = _mapper.Map<ProductDto, Product>(productDto, product);
+            product = _mapper.Map<ProductEditDto, Product>(productEditDto, product);
             product.ProductId = id;
             await _productRepository.UpdateAsync(product);
         }

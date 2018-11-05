@@ -232,6 +232,10 @@ namespace TestApiBakery.Migrations
 
                     b.Property<string>("AppUserId");
 
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(0);
+
                     b.HasKey("OrderId");
 
                     b.HasIndex("AppUserId");
@@ -245,6 +249,8 @@ namespace TestApiBakery.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("OrderId");
+
+                    b.Property<decimal>("Price");
 
                     b.Property<int>("ProductId");
 
@@ -269,6 +275,8 @@ namespace TestApiBakery.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("ImagePath");
+
+                    b.Property<bool>("IsHidden");
 
                     b.Property<string>("Name");
 

@@ -57,9 +57,9 @@ namespace TestApiBakery.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OrderCreateDto orderCreateDto)
+        public async Task<IActionResult> Post([FromBody] OrderAddDto orderAddDto)
         {
-            if (orderCreateDto == null)
+            if (orderAddDto == null)
             {
                 return BadRequest();
             }
@@ -73,7 +73,7 @@ namespace TestApiBakery.Controllers
             //{
             //    return NotFound();
             //}
-            await _orderService.AddAsync(orderCreateDto);
+            await _orderService.AddAsync(orderAddDto);
 
             //var order = Mapper.Map<OrderCreateDto, Order>(orderCreateDto);
             // await _orderRepository.AddAsync(order);
@@ -82,14 +82,28 @@ namespace TestApiBakery.Controllers
 
         // PUT: api/Orders/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
+        public async Task<IActionResult> Put(int id, [FromBody] OrderUpdateDto orderUpdateDto)
         {
+            if (orderUpdateDto == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            //if (!await _orderRepository.CategoryExistsAsync(orderDto.CategoryId))
+            //{
+            //    return NotFound();
+            //}
+            await _orderService.UpdateAsync(id, orderUpdateDto);
+
+            //var order = Mapper.Map<OrderCreateDto, Order>(orderCreateDto);
+            // await _orderRepository.AddAsync(order);
+            return StatusCode(201);
         }
-        
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+
     }
 }

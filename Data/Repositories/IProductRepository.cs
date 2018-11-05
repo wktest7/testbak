@@ -12,6 +12,8 @@ namespace TestApiBakery.Data.Repositories
         Task<IEnumerable<Product>> GetByCategoryAsync(string category);
         Task AddAsync(Product product);
         Task UpdateAsync(Product product);
-        Task RemoveAsync(Product product);
+        //Task RemoveAsync(Product product);
+        //Task HideAsync(Product product);
+
     }
 }

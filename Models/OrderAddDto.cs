@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace TestApiBakery.Models
 {
-    public class OrderCreateDto
+    public class OrderAddDto
     {
-        public List<OrderItemCreateDto> OrderItems { get; set; }
+        public List<OrderItemAddDto> OrderItems { get; set; }
     }
 }

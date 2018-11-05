@@ -11,8 +11,8 @@ using TestApiBakery.Data;
 namespace TestApiBakery.Migrations
 {
     [DbContext(typeof(BakeryDbContext))]
-    [Migration("20181102170052_init")]
-    partial class init
+    [Migration("20181104161906_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -233,6 +233,10 @@ namespace TestApiBakery.Migrations
 
                     b.Property<string>("AppUserId");
 
+                    b.Property<int>("Status")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValue(0);
+
                     b.HasKey("OrderId");
 
                     b.HasIndex("AppUserId");
@@ -246,6 +250,8 @@ namespace TestApiBakery.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("OrderId");
+
+                    b.Property<decimal>("Price");
 
                     b.Property<int>("ProductId");
 
@@ -270,6 +276,8 @@ namespace TestApiBakery.Migrations
                     b.Property<string>("Description");
 
                     b.Property<string>("ImagePath");
+
+                    b.Property<bool>("IsHidden");
 
                     b.Property<string>("Name");
 

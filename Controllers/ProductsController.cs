@@ -44,9 +44,9 @@ namespace TestApiBakery.Controllers
 
         
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductDto productDto)
+        public async Task<IActionResult> Post([FromBody] ProductEditDto productEditDto)
         {
-            if (productDto == null)
+            if (productEditDto == null)
             {
                 return BadRequest();
             }
@@ -56,15 +56,15 @@ namespace TestApiBakery.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _productService.AddAsync(productDto);
+            await _productService.AddAsync(productEditDto);
             return StatusCode(201);
         }
 
         
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] ProductDto productDto)
+        public async Task<IActionResult> Put(int id, [FromBody] ProductEditDto productEditDto)
         {
-            if (productDto == null)
+            if (productEditDto == null)
             {
                 return BadRequest();
             }
@@ -74,18 +74,18 @@ namespace TestApiBakery.Controllers
                 return BadRequest(ModelState);
             }
             
-            await _productService.UpdateAsync(id, productDto);
+            await _productService.UpdateAsync(id, productEditDto);
 
             return NoContent();
         }
 
        
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
-        {
-            await _productService.RemoveAsync(id);
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> Delete(int id)
+        //{
+        //    await _productService.RemoveAsync(id);
             
-            return NoContent();
-        }
+        //    return NoContent();
+        //}
     }
 }

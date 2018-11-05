@@ -38,11 +38,11 @@ namespace TestApiBakery.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task RemoveAsync(Product product)
-        {
-            _context.Products.Remove(product);
-            await _context.SaveChangesAsync();
-        }
+        //public async Task RemoveAsync(Product product)
+        //{
+        //    _context.Products.Remove(product);
+        //    await _context.SaveChangesAsync();
+        //}
 
         public async Task<Product> GetByIdAsync(int id, bool includeCategory = true)
         {

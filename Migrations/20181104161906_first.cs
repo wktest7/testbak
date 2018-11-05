@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TestApiBakery.Migrations
 {
-    public partial class init : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -197,7 +197,8 @@ namespace TestApiBakery.Migrations
                 {
                     OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AppUserId = table.Column<string>(nullable: true)
+                    AppUserId = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false, defaultValue: 0)
                 },
                 constraints: table =>
                 {
@@ -219,6 +220,7 @@ namespace TestApiBakery.Migrations
                     CategoryId = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     ImagePath = table.Column<string>(nullable: true),
+                    IsHidden = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
                     Weight = table.Column<int>(nullable: false)
@@ -241,6 +243,7 @@ namespace TestApiBakery.Migrations
                     OrderItemId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     OrderId = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
                     Quantity = table.Column<int>(nullable: false)
                 },

@@ -14,7 +14,8 @@ namespace TestApiBakery.Data
             {
                 var rnd = new Random();
 
-                var details = new BakeryDetails {
+                var details = new BakeryDetails
+                {
                     Address = "Kraków, Pawia 5",
                     Name = "testName",
                     Nip = "3334444123",
@@ -66,11 +67,12 @@ namespace TestApiBakery.Data
 
                 var orders = new List<Order>();
 
-                for (int i = 0; i < 50; i++)
+                for (int i = 0; i < 30; i++)
                 {
                     orders.Add(new Order
                     {
-                        AppUserId = appUsers[rnd.Next(appUsers.Count)].Id
+                        AppUserId = appUsers[rnd.Next(appUsers.Count)].Id,
+                        Status = Status.New
                     });
                 }
                 context.Orders.AddRange(orders);
@@ -80,12 +82,15 @@ namespace TestApiBakery.Data
 
                 for (int i = 0; i < 500; i++)
                 {
-                    orderItems.Add(new OrderItem
+                    var orderItem = new OrderItem
                     {
                         Quantity = rnd.Next(1, 5),
                         ProductId = products[rnd.Next(products.Count)].ProductId,
                         OrderId = orders[rnd.Next(orders.Count)].OrderId
-                    });
+                    };
+                    orderItem.Price = products.Where(x => x.ProductId == orderItem.ProductId).Select(x => x.Price).Single();
+
+                    orderItems.Add(orderItem);
                 }
                 context.OrdersItems.AddRange(orderItems);
 

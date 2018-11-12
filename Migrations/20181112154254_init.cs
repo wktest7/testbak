@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TestApiBakery.Migrations
 {
-    public partial class first : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -198,6 +198,7 @@ namespace TestApiBakery.Migrations
                     OrderId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     AppUserId = table.Column<string>(nullable: true),
+                    DateCreated = table.Column<DateTime>(nullable: false),
                     Status = table.Column<int>(nullable: false, defaultValue: 0)
                 },
                 constraints: table =>

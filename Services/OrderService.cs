@@ -33,10 +33,12 @@ namespace TestApiBakery.Services
         public async Task AddAsync(OrderAddDto orderAddDto)
         {
             //var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
-            var userId = "246cadfa-2a28-4da7-80f2-a793f5b44d62";
+            var userId = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
+           // var userId = "246cadfa-2a28-4da7-80f2-a793f5b44d62";
             var order = new Order();
             order.AppUserId = userId;
             order.Status = Status.New;
+            order.DateCreated = DateTime.UtcNow;
 
             foreach (var item in orderAddDto.OrderItems)
             {
@@ -64,6 +66,13 @@ namespace TestApiBakery.Services
         public async Task<IEnumerable<OrderDto>> GetByNipAsync(string nip)
         {
             var orders = await _orderRepository.GetByNipAsync(nip);
+            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetByUserIdAsync()
+        {
+            var userId = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
+            var orders = await _orderRepository.GetByUserIdAsync(userId);
             return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
         }
 

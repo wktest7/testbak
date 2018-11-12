@@ -9,6 +9,7 @@ namespace TestApiBakery.Services
     public interface IProductService
     {
         Task<ProductDto> GetByIdAsync(int id);
+        Task<IEnumerable<ProductDto>> GetAllAsync(bool includeHiddenProducts);
         Task<IEnumerable<ProductDto>> GetByCategoryAsync(string category);
         Task AddAsync(ProductEditDto productDto);
         Task UpdateAsync(int id, ProductEditDto productDto);

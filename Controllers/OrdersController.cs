@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestApiBakery.Data;
@@ -53,7 +54,20 @@ namespace TestApiBakery.Controllers
                 return NotFound();
             }
             return Ok(orders);
-            
+        }
+
+        [Authorize]
+        [HttpGet("userid")]
+        public async Task<IActionResult> GetByUserId()
+        {
+            //var userId = User.FindFirst("sub").Value;
+
+            var orders = await _orderService.GetByUserIdAsync();
+            if (orders.Count() == 0)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
         }
 
         [HttpPost]

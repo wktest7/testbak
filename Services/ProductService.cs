@@ -34,6 +34,20 @@ namespace TestApiBakery.Services
             await _productRepository.AddAsync(product);
         }
 
+        public async Task<IEnumerable<ProductDto>> GetAllAsync(bool includeHiddenProducts)
+        {
+            if (includeHiddenProducts)
+            {
+                var products = await _productRepository.GetAllAsync(true);
+                return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
+            }
+            else
+            {
+                var products = await _productRepository.GetAllAsync(false);
+                return _mapper.Map<IEnumerable<Product>, IEnumerable<ProductDto>>(products);
+            } 
+        }
+
         public async Task<IEnumerable<ProductDto>> GetByCategoryAsync(string category)
         {
             var products = await _productRepository.GetByCategoryAsync(category);

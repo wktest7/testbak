@@ -52,7 +52,7 @@ namespace TestApiBakery.Controllers
                     if (_hasher.VerifyHashedPassword(user, user.PasswordHash, model.Password) == PasswordVerificationResult.Success)
                     {
                         var claims = new List<Claim> {
-                            new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                            new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                            };
 
@@ -80,7 +80,7 @@ namespace TestApiBakery.Controllers
                           issuer: _config["Jwt:Issuer"],
                           audience: _config["Jwt:Audience"],
                           claims: claims,
-                          expires: DateTime.UtcNow.AddMinutes(15),
+                          //expires: DateTime.UtcNow.AddMinutes(300),
                           signingCredentials: creds
                           );
 

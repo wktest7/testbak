@@ -43,13 +43,13 @@ namespace TestApiBakery.Data
             //add user
             if (user1 == null & user2 == null)
             {
-                //if (!(await _roleMgr.RoleExistsAsync("User")))
-                //{
-                //    var role = new IdentityRole("User");
-                //    await _roleMgr.CreateAsync(role);
-                //    //role.Claims.Add(new IdentityRoleClaim<string>() { ClaimType = "IsAdmin", ClaimValue = "True" });
-                //    //await _roleMgr.CreateAsync(role);
-                //}
+                if (!(await roleMgr.RoleExistsAsync("user")))
+                {
+                    var role = new IdentityRole("user");
+                    await roleMgr.CreateAsync(role);
+                    //role.Claims.Add(new IdentityRoleClaim<string>() { ClaimType = "IsAdmin", ClaimValue = "True" });
+                    //await _roleMgr.CreateAsync(role);
+                }
 
                 user1 = new AppUser()
                 {
@@ -79,6 +79,9 @@ namespace TestApiBakery.Data
 
                 var userResult1 = await userMgr.CreateAsync(user1, "pw1234");
                 var userResult2 = await userMgr.CreateAsync(user2, "pw1234");
+                await userMgr.AddToRoleAsync(user1, "user");
+                await userMgr.AddToRoleAsync(user2, "user");
+
                 //var roleResult = await _userMgr.AddToRoleAsync(user, "User");
                 //var claimResult = await _userMgr.AddClaimAsync(user, new Claim("SuperUser", "True"));
 

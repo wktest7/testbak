@@ -20,7 +20,10 @@ namespace TestApiBakery.Models
         //public string CustomerPhone { get; set; }
 
         public decimal FinalPrice { get; set; }
-   
+        public DateTime DateCreated { get; set; }
+        public string Status { get; set; }
+
+
         public List<OrderItemDto> OrderItems { get; set; }
 
     }

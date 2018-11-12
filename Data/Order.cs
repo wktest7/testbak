@@ -10,7 +10,7 @@ namespace TestApiBakery.Data
     {
         public int OrderId { get; set; }
         public Status Status { get; set; }
-
+        public DateTime DateCreated { get; set; }
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }

@@ -58,6 +58,15 @@ namespace TestApiBakery.Data
                 context.Products.AddRange(products);
 
 
+                var dates = new List<DateTime> {
+                    new DateTime(2018, 11, 10),
+                    new DateTime(2018, 11, 9),
+                    new DateTime(2018, 11, 8),
+                    new DateTime(2018, 10, 5),
+                    new DateTime(2018, 9, 2),
+                    new DateTime(2018, 9, 17),
+
+            };
                 var appUsers = new List<AppUser>();
                 var user1 = await userMgr.FindByNameAsync("user1");
                 var user2 = await userMgr.FindByNameAsync("user2");
@@ -72,7 +81,8 @@ namespace TestApiBakery.Data
                     orders.Add(new Order
                     {
                         AppUserId = appUsers[rnd.Next(appUsers.Count)].Id,
-                        Status = Status.New
+                        Status = Status.Shipped,
+                        DateCreated = dates[rnd.Next(dates.Count)],
                     });
                 }
                 context.Orders.AddRange(orders);

@@ -11,8 +11,8 @@ using TestApiBakery.Data;
 namespace TestApiBakery.Migrations
 {
     [DbContext(typeof(BakeryDbContext))]
-    [Migration("20181104161906_first")]
-    partial class first
+    [Migration("20181112154254_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,6 +232,8 @@ namespace TestApiBakery.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("AppUserId");
+
+                    b.Property<DateTime>("DateCreated");
 
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()

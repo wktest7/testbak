@@ -58,5 +58,15 @@ namespace TestApiBakery.Services
                 .Where(x => x.ProductId == id)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<Product>> GetAllAsync(bool includeHiddenProducts)
+        {
+            if (includeHiddenProducts)
+            {
+                return await _context.Products.Include(x => x.Category).ToListAsync();
+                 
+            }
+            return await _context.Products.Include(x => x.Category).Where(x => x.IsHidden == false).ToListAsync();
+        }
     }
 }

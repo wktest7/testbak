@@ -232,6 +232,8 @@ namespace TestApiBakery.Migrations
 
                     b.Property<string>("AppUserId");
 
+                    b.Property<DateTime>("DateCreated");
+
                     b.Property<int>("Status")
                         .ValueGeneratedOnAdd()
                         .HasDefaultValue(0);

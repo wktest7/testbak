@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TestApiBakery.Data;
@@ -20,14 +21,24 @@ namespace TestApiBakery.Controllers
         {
             _productService = productService;
         }
-        
-        [HttpGet]
-        public IActionResult Get()
+
+        [Authorize(Roles = "user")]
+        [HttpGet("foruser")]
+        public async Task<IActionResult> ProductsForUser()
         {
-            return Ok("ss");
+            var products = await _productService.GetAllAsync(false);
+            return Ok(products);
         }
 
-        
+        [Authorize(Roles = "employee")]
+        [HttpGet("foremployee")]
+        public async Task<IActionResult> ProductsForEmployee()
+        {
+            var products = await _productService.GetAllAsync(true);
+            return Ok(products);
+        }
+
+
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {

@@ -15,12 +15,16 @@ namespace TestApiBakery.Mappers
             {
                 cfg.CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.Category, opts => opts.MapFrom(src => src.Category.Name));
-               // .ReverseMap()
+               // .ForMember(dest => dest.CategoryId, opts => opts.NullSubstitute("testtest"));
+                // .ReverseMap()
                 //.ForPath(dest => dest.Category.Name, opts => opts.MapFrom(src => src.Category))
                 //.ForPath(dest => dest.Category.CategoryId, opts => opts.MapFrom(src => src.CategoryId));
 
-                cfg.CreateMap<ProductEditDto, Product>()
-                .ForPath(dest => dest.Category.Name, opts => opts.MapFrom(src => src.Category))
+                cfg.CreateMap<ProductUpdateDto, Product>()
+                //.ForPath(dest => dest.Category.Name, opts => opts.MapFrom(src => src.Category))
+                .ForPath(dest => dest.Category.CategoryId, opts => opts.MapFrom(src => src.CategoryId));
+
+                cfg.CreateMap<ProductAddDto, Product>()
                 .ForPath(dest => dest.Category.CategoryId, opts => opts.MapFrom(src => src.CategoryId));
 
                 cfg.CreateMap<OrderItem, OrderItemDto>()
@@ -28,10 +32,12 @@ namespace TestApiBakery.Mappers
                 .ForMember(dest => dest.Weight, opts => opts.MapFrom(src => src.Product.Weight))
                 .ForMember(dest => dest.ProductPrice, opts => opts.MapFrom(src => src.Price))
                 .ForMember(dest => dest.Price, opts => opts.MapFrom(src => src.Price * src.Quantity));
-                
+
                 cfg.CreateMap<Order, OrderDto>()
                 .ForSourceMember(dest => dest.Status, opts => opts.Ignore())
-                .ForMember(dest => dest.FinalPrice, opts => opts.MapFrom(src => src.OrderItems.Sum(x => x.Price * x.Quantity)));
+                .ForMember(dest => dest.FinalPrice, opts => opts.MapFrom(src => src.OrderItems.Sum(x => x.Price * x.Quantity)))
+                .ForMember(dest => dest.CompanyName, opts => opts.MapFrom(src => src.AppUser.CompanyName))
+                .ForMember(dest => dest.Nip, opts => opts.MapFrom(src => src.AppUser.Nip));
 
                 cfg.CreateMap<CategoryDto, Category>();
 

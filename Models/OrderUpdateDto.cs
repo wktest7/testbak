@@ -9,8 +9,9 @@ namespace TestApiBakery.Models
     public class OrderUpdateDto
     {
         //public decimal FinalPrice { get; set; }
+        public int OrderId { get; set; }
         public Status Status { get; set; }
 
-        public List<OrderItemUpdateDto> OrderItems { get; set; }
+        public List<OrderItemUpdateDto> OrderItems { get; set; } //w service off
     }
 }

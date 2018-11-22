@@ -23,6 +23,16 @@ namespace TestApiBakery.Services
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Order>> GetAllAsync()
+        {
+            return await _context.Orders
+              .Include(x => x.AppUser)
+              .Include(x => x.OrderItems)
+              .ThenInclude(x => x.Product)
+              .OrderByDescending(x => x.DateCreated)
+              .ToListAsync();
+        }
+
         public async Task<Order> GetByIdAsync(int id)
         {
             return await _context.Orders
@@ -39,13 +49,15 @@ namespace TestApiBakery.Services
                 .Where(x => x.AppUser.Nip == nip)
                 .OrderByDescending(x => x.DateCreated)
                 .ToListAsync();
+            //del
         }
 
         public async Task<IEnumerable<Order>> GetByUserIdAsync(string id)
         {
             return await _context.Orders
+               .Include(x => x.AppUser)
                .Include(x => x.OrderItems)
-               .ThenInclude(a => a.Product)
+               .ThenInclude(x => x.Product)
                .Where(x => x.AppUserId == id)
                .OrderByDescending(x => x.DateCreated)
                .ToListAsync();

@@ -11,8 +11,8 @@ namespace TestApiBakery.Services
         Task<ProductDto> GetByIdAsync(int id);
         Task<IEnumerable<ProductDto>> GetAllAsync(bool includeHiddenProducts);
         Task<IEnumerable<ProductDto>> GetByCategoryAsync(string category);
-        Task AddAsync(ProductEditDto productDto);
-        Task UpdateAsync(int id, ProductEditDto productDto);
+        Task AddAsync(ProductAddDto productAddDto);//to add new dto
+        Task UpdateAsync(ProductUpdateDto productUpdateDto);
         //Task RemoveAsync(int id);
 
     }

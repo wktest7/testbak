@@ -28,9 +28,14 @@ namespace TestApiBakery.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            var orders = await _orderService.GetAllAsync();
+            if (orders.Count() == 0)
+            {
+                return NotFound();
+            }
+            return Ok(orders);
         }
 
         // GET: api/Orders/5
@@ -95,8 +100,8 @@ namespace TestApiBakery.Controllers
         }
 
         // PUT: api/Orders/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] OrderUpdateDto orderUpdateDto)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] OrderUpdateDto orderUpdateDto)
         {
             if (orderUpdateDto == null)
             {
@@ -112,7 +117,7 @@ namespace TestApiBakery.Controllers
             //{
             //    return NotFound();
             //}
-            await _orderService.UpdateAsync(id, orderUpdateDto);
+            await _orderService.UpdateAsync(orderUpdateDto);
 
             //var order = Mapper.Map<OrderCreateDto, Order>(orderCreateDto);
             // await _orderRepository.AddAsync(order);

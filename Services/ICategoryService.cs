@@ -8,9 +8,9 @@ namespace TestApiBakery.Services
 {
     public interface ICategoryService
     {
-        Task<IEnumerable<string>> GetNamesAsync();
+        Task<IEnumerable<CategoryDto>> GetAllAsync();
         Task AddAsync(CategoryDto productDto);
-        Task UpdateAsync(int id, CategoryDto categoryDto);
+        Task UpdateAsync(CategoryDto categoryDto);
         Task RemoveAsync(int id);
     }
 }

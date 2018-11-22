@@ -26,10 +26,10 @@ namespace TestApiBakery.Services
             await _categoryRepository.AddAsync(category);
         }
 
-        public async Task<IEnumerable<string>> GetNamesAsync()
+        public async Task<IEnumerable<CategoryDto>> GetAllAsync()
         {
             var categories = await _categoryRepository.GetAllAsync();
-            return categories.Select(x => x.Name);
+            return _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDto>>(categories);
         }
 
         public async Task RemoveAsync(int id)
@@ -43,16 +43,14 @@ namespace TestApiBakery.Services
             await _categoryRepository.RemoveAsync(category);
         }
 
-        public async Task UpdateAsync(int id, CategoryDto categoryDto)
+        public async Task UpdateAsync(CategoryDto categoryDto)
         {
-            var category = await _categoryRepository.GetByIdAsync(id);
+            var category = await _categoryRepository.GetByIdAsync(categoryDto.CategoryId);
             if (category == null)
             {
-                throw new Exception($"Category  with id: '{id}' not exists.");
+                throw new Exception($"Category  with id: '{categoryDto.CategoryId}' not exists.");
             }
-
             category = _mapper.Map<CategoryDto, Category>(categoryDto, category);
-            category.CategoryId = id;
             await _categoryRepository.UpdateAsync(category);
         }
     }

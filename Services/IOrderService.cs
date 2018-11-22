@@ -8,11 +8,12 @@ namespace TestApiBakery.Services
 {
     public interface IOrderService
     {
-        Task<IEnumerable<OrderDto>> GetByNipAsync(string nip);
+        Task<IEnumerable<OrderDto>> GetByNipAsync(string nip);//
         Task<IEnumerable<OrderDto>> GetByUserIdAsync();
+        Task<IEnumerable<OrderDto>> GetAllAsync();
         Task<OrderDto> GetByIdAsync(int id);
         Task AddAsync(OrderAddDto orderAddDto);
-        Task UpdateAsync(int id, OrderUpdateDto orderUpdateDto);
+        Task UpdateAsync(OrderUpdateDto orderUpdateDto);
 
     }
 }

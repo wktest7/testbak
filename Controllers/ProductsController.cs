@@ -45,7 +45,7 @@ namespace TestApiBakery.Controllers
             var product = await _productService.GetByIdAsync(id);
             return Ok(product);
         }
-
+        //delete
         [HttpGet("category/{category}")]
         public async Task<IActionResult> Get(string category)
         {
@@ -55,9 +55,9 @@ namespace TestApiBakery.Controllers
 
         
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] ProductEditDto productEditDto)
+        public async Task<IActionResult> Post([FromBody] ProductAddDto productAddDto)
         {
-            if (productEditDto == null)
+            if (productAddDto == null)
             {
                 return BadRequest();
             }
@@ -67,15 +67,15 @@ namespace TestApiBakery.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _productService.AddAsync(productEditDto);
+            await _productService.AddAsync(productAddDto);
             return StatusCode(201);
         }
 
         
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] ProductEditDto productEditDto)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] ProductUpdateDto productUpdateDto)
         {
-            if (productEditDto == null)
+            if (productUpdateDto == null)
             {
                 return BadRequest();
             }
@@ -85,7 +85,7 @@ namespace TestApiBakery.Controllers
                 return BadRequest(ModelState);
             }
             
-            await _productService.UpdateAsync(id, productEditDto);
+            await _productService.UpdateAsync(productUpdateDto);
 
             return NoContent();
         }

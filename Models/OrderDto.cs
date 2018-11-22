@@ -18,10 +18,12 @@ namespace TestApiBakery.Models
         //public string CustomerPostalCode { get; set; }
         //public string CustomerNip { get; set; }
         //public string CustomerPhone { get; set; }
-
+        public int OrderId { get; set; }
         public decimal FinalPrice { get; set; }
         public DateTime DateCreated { get; set; }
         public string Status { get; set; }
+        public string CompanyName { get; set; }
+        public string Nip { get; set; }
 
 
         public List<OrderItemDto> OrderItems { get; set; }

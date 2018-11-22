@@ -24,7 +24,7 @@ namespace TestApiBakery.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Ok(await _categoryService.GetNamesAsync());
+            return Ok(await _categoryService.GetAllAsync());
         }
         
         [HttpPost]
@@ -44,8 +44,8 @@ namespace TestApiBakery.Controllers
             return StatusCode(201);
         }
         
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] CategoryDto categoryDto)
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] CategoryDto categoryDto)
         {
             if (categoryDto == null)
             {
@@ -57,7 +57,7 @@ namespace TestApiBakery.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _categoryService.UpdateAsync(id, categoryDto);
+            await _categoryService.UpdateAsync(categoryDto);
 
             return NoContent();
         }

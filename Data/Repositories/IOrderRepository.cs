@@ -8,7 +8,8 @@ namespace TestApiBakery.Data.Repositories
     public interface IOrderRepository
     {
         Task<Order> GetByIdAsync(int id);
-        Task<IEnumerable<Order>> GetByNipAsync(string nip);
+        Task<IEnumerable<Order>> GetAllAsync(); //
+        Task<IEnumerable<Order>> GetByNipAsync(string nip); //
         Task<IEnumerable<Order>> GetByUserIdAsync(string id);
         Task AddAsync(Order order);
         Task UpdateAsync(Order order);

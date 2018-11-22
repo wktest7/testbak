@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TestApiBakery.Models
 {
-    public class ProductEditDto
+    public class ProductAddDto
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -13,6 +13,5 @@ namespace TestApiBakery.Models
         public decimal Price { get; set; }
         public bool IsHidden { get; set; }
         public int CategoryId { get; set; }
-        public string Category { get; set; }
     }
 }

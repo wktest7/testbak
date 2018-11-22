@@ -38,7 +38,7 @@ namespace TestApiBakery.Services
             var order = new Order();
             order.AppUserId = userId;
             order.Status = Status.New;
-            order.DateCreated = DateTime.UtcNow;
+            order.DateCreated = DateTime.Now;
 
             foreach (var item in orderAddDto.OrderItems)
             {
@@ -55,6 +55,12 @@ namespace TestApiBakery.Services
                 });
             }
             await _orderRepository.AddAsync(order);
+        }
+
+        public async Task<IEnumerable<OrderDto>> GetAllAsync()
+        {
+            var orders = await _orderRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
         }
 
         public async Task<OrderDto> GetByIdAsync(int id)
@@ -76,25 +82,27 @@ namespace TestApiBakery.Services
             return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
         }
 
-        public async Task UpdateAsync(int id, OrderUpdateDto orderUpdateDto)
+        public async Task UpdateAsync(OrderUpdateDto orderUpdateDto)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
+            var order = await _orderRepository.GetByIdAsync(orderUpdateDto.OrderId);
             if (order == null)
             {
-                throw new Exception($"Order with id: '{id}' not exists.");
+                throw new Exception($"Order with id: '{orderUpdateDto.OrderId}' not exists.");
             }
-
-            order.Status = orderUpdateDto.Status;
-
-            foreach (var item in orderUpdateDto.OrderItems)
+            if (orderUpdateDto.Status == Status.Shipped)
             {
-                if (order.OrderItems.Any(x => x.OrderItemId == item.OrderItemId))
-                {
-                    var orderItem = order.OrderItems.Where(x => x.OrderItemId == item.OrderItemId).FirstOrDefault();
-                    orderItem.Price = item.ProductPrice;
-                    orderItem.Quantity = item.Quantity;
-                }  
+                order.Status = orderUpdateDto.Status;
             }
+            //
+            //foreach (var item in orderUpdateDto.OrderItems)
+            //{
+            //    if (order.OrderItems.Any(x => x.OrderItemId == item.OrderItemId))
+            //    {
+            //        var orderItem = order.OrderItems.Where(x => x.OrderItemId == item.OrderItemId).FirstOrDefault();
+            //        orderItem.Price = item.ProductPrice;
+            //        orderItem.Quantity = item.Quantity;
+            //    }  
+            //}
             await _orderRepository.UpdateAsync(order);
         }
     }

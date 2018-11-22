@@ -5,15 +5,14 @@ using System.Threading.Tasks;
 
 namespace TestApiBakery.Models
 {
-    public class ProductDto
+    public class ProductUpdateDto
     {
         public int ProductId { get; set; }
         public string Name { get; set; }
-        public bool IsHidden { get; set; }
         public string Description { get; set; }
         public string Weight { get; set; }
         public decimal Price { get; set; }
-        public int? CategoryId { get; set; }
-        public string Category { get; set; }
+        public bool IsHidden { get; set; }
+        public int CategoryId { get; set; }
     }
 }

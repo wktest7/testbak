@@ -17,7 +17,6 @@ namespace TestApiBakery.Data
 
 
         public DbSet<AppUser> AppUsers { get; set; }
-        public DbSet<BakeryDetails> BakeryDetails { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrdersItems { get; set; }

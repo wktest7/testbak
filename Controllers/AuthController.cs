@@ -16,8 +16,7 @@ using TestApiBakery.Models;
 
 namespace TestApiBakery.Controllers
 {
-    //[Produces("application/json")]
-    //[Route("api/Auth")]
+    [Produces("application/json")]
     public class AuthController : Controller
     {
 
@@ -62,17 +61,8 @@ namespace TestApiBakery.Controllers
                         foreach (var userRole in userRoles)
                         {
                             claims.Add(new Claim("role", userRole));
-                            //var role = await _roleManager.FindByNameAsync(userRole);
-                            //if (role != null)
-                            //{
-                            //    var roleClaims = await _roleManager.GetClaimsAsync(role);
-                            //    foreach (Claim roleClaim in roleClaims)
-                            //    {
-                            //        claims.Add(roleClaim);
-                            //    }
-                            //}
-                        }
 
+                        }
 
                         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
                         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -81,7 +71,7 @@ namespace TestApiBakery.Controllers
                           issuer: _config["Jwt:Issuer"],
                           audience: _config["Jwt:Audience"],
                           claims: claims,
-                          //expires: DateTime.UtcNow.AddMinutes(300),
+                          //expires: DateTime.UtcNow.AddMinutes(30),
                           signingCredentials: creds
                           );
 
@@ -95,7 +85,7 @@ namespace TestApiBakery.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Exception thrown while creating JWT: {ex}");
+                throw new Exception($"Exception thrown while creating JWT: {ex}");
             }
 
             return BadRequest("Failed to generate token");

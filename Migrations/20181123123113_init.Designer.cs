@@ -11,7 +11,7 @@ using TestApiBakery.Data;
 namespace TestApiBakery.Migrations
 {
     [DbContext(typeof(BakeryDbContext))]
-    [Migration("20181112154254_init")]
+    [Migration("20181123123113_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,26 +192,6 @@ namespace TestApiBakery.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TestApiBakery.Data.BakeryDetails", b =>
-                {
-                    b.Property<int>("BakeryDetailsId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Address");
-
-                    b.Property<string>("Name");
-
-                    b.Property<string>("Nip");
-
-                    b.Property<string>("Phone");
-
-                    b.Property<string>("PostalCode");
-
-                    b.HasKey("BakeryDetailsId");
-
-                    b.ToTable("BakeryDetails");
-                });
-
             modelBuilder.Entity("TestApiBakery.Data.Category", b =>
                 {
                     b.Property<int>("CategoryId")
@@ -276,8 +256,6 @@ namespace TestApiBakery.Migrations
                     b.Property<int?>("CategoryId");
 
                     b.Property<string>("Description");
-
-                    b.Property<string>("ImagePath");
 
                     b.Property<bool>("IsHidden");
 

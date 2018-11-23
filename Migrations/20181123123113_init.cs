@@ -55,23 +55,6 @@ namespace TestApiBakery.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "BakeryDetails",
-                columns: table => new
-                {
-                    BakeryDetailsId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Address = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Nip = table.Column<string>(nullable: true),
-                    Phone = table.Column<string>(nullable: true),
-                    PostalCode = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_BakeryDetails", x => x.BakeryDetailsId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
@@ -220,7 +203,6 @@ namespace TestApiBakery.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CategoryId = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    ImagePath = table.Column<string>(nullable: true),
                     IsHidden = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(nullable: false),
@@ -341,9 +323,6 @@ namespace TestApiBakery.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "BakeryDetails");
 
             migrationBuilder.DropTable(
                 name: "OrdersItems");

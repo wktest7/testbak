@@ -10,19 +10,9 @@ namespace TestApiBakery.Data
     {
         public async static Task Seed(BakeryDbContext context, UserManager<AppUser> userMgr)
         {
-            if (!context.BakeryDetails.Any())
+            if (!context.Products.Any())
             {
                 var rnd = new Random();
-
-                var details = new BakeryDetails
-                {
-                    Address = "Kraków, Pawia 5",
-                    Name = "testName",
-                    Nip = "3334444123",
-                    PostalCode = "31-154 Kraków",
-                    Phone = "555554444"
-                };
-                context.BakeryDetails.Add(details);
 
                 var categories = new List<Category>();
 
@@ -36,8 +26,8 @@ namespace TestApiBakery.Data
                 var descriptions = new List<string>
                 {
                     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit",
-                    "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                    "Nulla non lectus sed nisl molestie malesuada. Vivamus luctus egestas leo.",
+                    "Excepteur sint occaecat cupidatat non proident.",
+                    "Nulla non lectus sed nisl molestie malesuada.",
                     "Quisque tincidunt scelerisque libero.",
                     "Duis viverra diam non justo"
                 };
@@ -48,7 +38,7 @@ namespace TestApiBakery.Data
                 {
                     products.Add(new Product
                     {
-                        Name = "Products " + i,
+                        Name = "Product " + i,
                         Price = prices[rnd.Next(prices.Count)],
                         CategoryId = categories[rnd.Next(categories.Count)].CategoryId,
                         Description = descriptions[rnd.Next(descriptions.Count)],
@@ -59,9 +49,9 @@ namespace TestApiBakery.Data
 
 
                 var dates = new List<DateTime> {
-                    new DateTime(2018, 11, 10),
+                    new DateTime(2018, 11, 29),
                     new DateTime(2018, 11, 9),
-                    new DateTime(2018, 11, 8),
+                    new DateTime(2018, 11, 27),
                     new DateTime(2018, 10, 5),
                     new DateTime(2018, 9, 2),
                     new DateTime(2018, 9, 17),

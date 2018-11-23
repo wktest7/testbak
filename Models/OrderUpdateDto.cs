@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using TestApiBakery.Data;
@@ -8,10 +9,9 @@ namespace TestApiBakery.Models
 {
     public class OrderUpdateDto
     {
-        //public decimal FinalPrice { get; set; }
+        [Required]
         public int OrderId { get; set; }
+        [Required]
         public Status Status { get; set; }
-
-        public List<OrderItemUpdateDto> OrderItems { get; set; } //w service off
     }
 }

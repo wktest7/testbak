@@ -14,8 +14,6 @@ namespace TestApiBakery.Data
         public ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
         public string AppUserId { get; set; }
         public AppUser AppUser { get; set; }
-        //public int BakeryDetailsId { get; set; }
-        //public BakeryDetails BakeryDetails { get; set; }
     }
 
     public enum Status : int

@@ -10,7 +10,6 @@ namespace TestApiBakery.Data
         public int ProductId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string ImagePath { get; set; }
         public int Weight { get; set; }
         public decimal Price { get; set; }
         public bool IsHidden { get; set; }

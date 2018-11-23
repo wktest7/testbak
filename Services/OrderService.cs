@@ -27,14 +27,12 @@ namespace TestApiBakery.Services
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
-            //i potem user manager get by name
         }
 
         public async Task AddAsync(OrderAddDto orderAddDto)
         {
-            //var userName = _httpContextAccessor.HttpContext.User.Identity.Name;
             var userId = _userManager.GetUserId(_httpContextAccessor.HttpContext.User);
-           // var userId = "246cadfa-2a28-4da7-80f2-a793f5b44d62";
+
             var order = new Order();
             order.AppUserId = userId;
             order.Status = Status.New;
@@ -63,17 +61,6 @@ namespace TestApiBakery.Services
             return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
         }
 
-        public async Task<OrderDto> GetByIdAsync(int id)
-        {
-            var order = await _orderRepository.GetByIdAsync(id);
-            return _mapper.Map<Order, OrderDto>(order);  
-        }
-
-        public async Task<IEnumerable<OrderDto>> GetByNipAsync(string nip)
-        {
-            var orders = await _orderRepository.GetByNipAsync(nip);
-            return _mapper.Map<IEnumerable<Order>, IEnumerable<OrderDto>>(orders);
-        }
 
         public async Task<IEnumerable<OrderDto>> GetByUserIdAsync()
         {
@@ -93,16 +80,7 @@ namespace TestApiBakery.Services
             {
                 order.Status = orderUpdateDto.Status;
             }
-            //
-            //foreach (var item in orderUpdateDto.OrderItems)
-            //{
-            //    if (order.OrderItems.Any(x => x.OrderItemId == item.OrderItemId))
-            //    {
-            //        var orderItem = order.OrderItems.Where(x => x.OrderItemId == item.OrderItemId).FirstOrDefault();
-            //        orderItem.Price = item.ProductPrice;
-            //        orderItem.Quantity = item.Quantity;
-            //    }  
-            //}
+    
             await _orderRepository.UpdateAsync(order);
         }
     }

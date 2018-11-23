@@ -38,23 +38,7 @@ namespace TestApiBakery.Controllers
             return Ok(products);
         }
 
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var product = await _productService.GetByIdAsync(id);
-            return Ok(product);
-        }
-        //delete
-        [HttpGet("category/{category}")]
-        public async Task<IActionResult> Get(string category)
-        {
-            var products = await _productService.GetByCategoryAsync(category);
-            return Ok(products);
-        }
-
-        
-        [HttpPost]
+        [Authorize(Roles = "employee")]
         public async Task<IActionResult> Post([FromBody] ProductAddDto productAddDto)
         {
             if (productAddDto == null)
@@ -70,9 +54,9 @@ namespace TestApiBakery.Controllers
             await _productService.AddAsync(productAddDto);
             return StatusCode(201);
         }
-
         
         [HttpPut]
+        [Authorize(Roles = "employee")]
         public async Task<IActionResult> Put([FromBody] ProductUpdateDto productUpdateDto)
         {
             if (productUpdateDto == null)
@@ -89,14 +73,5 @@ namespace TestApiBakery.Controllers
 
             return NoContent();
         }
-
-       
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> Delete(int id)
-        //{
-        //    await _productService.RemoveAsync(id);
-            
-        //    return NoContent();
-        //}
     }
 }

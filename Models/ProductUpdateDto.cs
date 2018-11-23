@@ -21,7 +21,7 @@ namespace TestApiBakery.Models
         public string Weight { get; set; }
         [Required]
         [Range(0, 1000)]
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
+        //[RegularExpression(@"^\d+\.\d{0,2}$", ErrorMessage = "Price can't have more than 2 decimal places")]
         public decimal Price { get; set; }
         [Required]
         public bool IsHidden { get; set; }

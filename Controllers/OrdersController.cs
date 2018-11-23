@@ -26,8 +26,8 @@ namespace TestApiBakery.Controllers
             _orderService = orderService;
         }
 
-        // GET: api/Orders
-        [HttpGet]
+ 
+        [Authorize(Roles = "employee")]
         public async Task<IActionResult> Get()
         {
             var orders = await _orderService.GetAllAsync();
@@ -38,35 +38,33 @@ namespace TestApiBakery.Controllers
             return Ok(orders);
         }
 
-        // GET: api/Orders/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            var order = await _orderService.GetByIdAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-            return Ok(order);
-        }
+        //// GET: api/Orders/5
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Get(int id)
+        //{
+        //    var order = await _orderService.GetByIdAsync(id);
+        //    if (order == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(order);
+        //}
 
-        [HttpGet("nip/{nip}")]
-        public async Task<IActionResult> GetByNip(string nip)
-        {
-            var orders = await _orderService.GetByNipAsync(nip);
-            if (orders.Count() == 0)
-            {
-                return NotFound();
-            }
-            return Ok(orders);
-        }
+        //[HttpGet("nip/{nip}")]
+        //public async Task<IActionResult> GetByNip(string nip)
+        //{
+        //    var orders = await _orderService.GetByNipAsync(nip);
+        //    if (orders.Count() == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok(orders);
+        //}
 
-        [Authorize]
+        [Authorize(Roles = "user")]
         [HttpGet("userid")]
         public async Task<IActionResult> GetByUserId()
         {
-            //var userId = User.FindFirst("sub").Value;
-
             var orders = await _orderService.GetByUserIdAsync();
             if (orders.Count() == 0)
             {
@@ -76,6 +74,7 @@ namespace TestApiBakery.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "user")]
         public async Task<IActionResult> Post([FromBody] OrderAddDto orderAddDto)
         {
             if (orderAddDto == null)
@@ -87,20 +86,13 @@ namespace TestApiBakery.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            //if (!await _orderRepository.CategoryExistsAsync(orderDto.CategoryId))
-            //{
-            //    return NotFound();
-            //}
             await _orderService.AddAsync(orderAddDto);
-
-            //var order = Mapper.Map<OrderCreateDto, Order>(orderCreateDto);
-            // await _orderRepository.AddAsync(order);
             return StatusCode(201);
         }
 
-        // PUT: api/Orders/5
+        
         [HttpPut]
+        [Authorize(Roles = "employee")]
         public async Task<IActionResult> Put([FromBody] OrderUpdateDto orderUpdateDto)
         {
             if (orderUpdateDto == null)
@@ -113,14 +105,8 @@ namespace TestApiBakery.Controllers
                 return BadRequest(ModelState);
             }
 
-            //if (!await _orderRepository.CategoryExistsAsync(orderDto.CategoryId))
-            //{
-            //    return NotFound();
-            //}
             await _orderService.UpdateAsync(orderUpdateDto);
 
-            //var order = Mapper.Map<OrderCreateDto, Order>(orderCreateDto);
-            // await _orderRepository.AddAsync(order);
             return StatusCode(201);
         }
 

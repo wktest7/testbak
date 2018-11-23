@@ -19,7 +19,7 @@ namespace TestApiBakery.Models
         public int Weight { get; set; }
         [Required]
         [Range(0, 1000)]
-        [RegularExpression(@"^\d+\.\d{0,2}$")]
+       // [RegularExpression(@"^\d+\.\d{0,2}$")]
         public decimal Price { get; set; }
         [Required]
         public bool IsHidden { get; set; }

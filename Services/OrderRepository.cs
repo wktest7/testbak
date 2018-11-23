@@ -41,16 +41,6 @@ namespace TestApiBakery.Services
               .FirstOrDefaultAsync(x => x.OrderId == id);
         }
 
-        public async Task<IEnumerable<Order>> GetByNipAsync(string nip)
-        {
-            return await _context.Orders
-                .Include(x => x.OrderItems)
-                .ThenInclude(a => a.Product)
-                .Where(x => x.AppUser.Nip == nip)
-                .OrderByDescending(x => x.DateCreated)
-                .ToListAsync();
-            //del
-        }
 
         public async Task<IEnumerable<Order>> GetByUserIdAsync(string id)
         {
@@ -63,15 +53,6 @@ namespace TestApiBakery.Services
                .ToListAsync();
         }
 
-        public async Task<bool> OrderExistsAsync(int id)
-        {
-            var order = await _context.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
-            if (order != null)
-            {
-                return true;
-            }
-            return false;
-        }
 
         public async Task RemoveAsync(Order order)
         {

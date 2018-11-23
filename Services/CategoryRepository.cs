@@ -26,11 +26,11 @@ namespace TestApiBakery.Services
         public async Task<bool> CategoryExistsAsync(int id)
         {
             var category = await _context.Categories.FirstOrDefaultAsync(x => x.CategoryId == id);
-            if (category != null)
+            if (category == null)
             {
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         public async Task<IEnumerable<Category>> GetAllAsync()
